@@ -1,30 +1,46 @@
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <bitset>
+#include <cmath>
 
-
-double s_calculation(double x, double y, double z) {
-
-    return x + y * z;
+double s_calculation(double x) {
+    double delta = 1e-5;
+    auto f = [](double x) {
+        return 3 * sin(sqrt(12 * x) + log(x - 3));
+    };
+    double derivative = (f(x + delta) - f(x)) / delta;
+    return derivative + x;
 }
 
-int main() {
-
-    double x = 10.5, y = 20.3, z = 5.2;
-    int b = 123;
-
-
-    double result = s_calculation(x, y, z);
-
-
+void runTest(double x, int b) {
+    double result = s_calculation(x);
     std::string binaryB = std::bitset<sizeof(int) * 8>(b).to_string();
 
     std::ofstream outputFile("output.txt", std::ios_base::app);
-    outputFile << "Результати виконання функції s_calculation з аргументами х, у, z: " << result << "\n"
-               << "Число b у двійковому коді: " << binaryB << "\n";
+    if (outputFile.is_open()) {
+        outputFile << "Результати виконання функції s_calculation з аргументами x: " << result << "\n"
+                   << "Число b у двійковому коді: " << binaryB << "\n";
+        outputFile.close();
+        std::cout << "Тест для x=" << x << " та b=" << b << " успішно виконаний.\n";
+    } else {
+        std::cerr << "Помилка: Неможливо відкрити файл для запису результатів.\n";
+    }
+}
 
-    outputFile.close();
+int main() {
+setlocale(LC_ALL, "ukr");
+
+    double x;
+    int b;
+
+    std::cout << "Введіть значення x: ";
+    std::cin >> x;
+    std::cout << "Введіть ціле число b: ";
+    std::cin >> b;
+
+    runTest(x, b);
 
     return 0;
 }
