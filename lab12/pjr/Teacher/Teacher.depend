@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1716922686 source:c:\users\wljdi\onedrive\Рабочий стол\bmtp lab\zamai-volodymyr-ki23\lab12\pjr\teacher\main.cpp
+	<iostream>
+	<string>
+	<cassert>
+	<fstream>
+
